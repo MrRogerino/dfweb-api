@@ -9,6 +9,14 @@ class EventController < ApplicationController
     render json: {random_event: eventbrite_adapter.random_event(keyword, location)}
   end
 
+  def itinerary
+    location = params[:location]
+    keyword = params[:q]
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    render json: { itinerary: eventbrite_adapter.itinerary(keyword, location, start_date, end_date) }
+  end
+
   def eventbrite_adapter
     Adapter::EventBriteAdapter.new
   end

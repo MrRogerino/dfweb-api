@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root 'event#welcome'
 
   get '/whatever', to: 'event#whatever'
+  get '/itinerary', to: 'event#itinerary'
 end
