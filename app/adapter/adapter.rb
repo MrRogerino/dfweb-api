@@ -10,8 +10,19 @@ module Adapter
                             q: keyword,
  +                          "location.address".to_sym => location,
  +                          "start_date.range_start".to_sym => start_date.to_s[0..-7],
- +                          "start_date.range_end".to_sym => (start_date + 1.day).to_s[0..-7] })["events"][0..9]
+ +                          "start_date.range_end".to_sym => (start_date + 1.day).to_s[0..-7] })["events"]
  +  end
+
+    private
+    
+    def parse_event_details(event)
+      id = event["id"]
+      details = { name: event["name"],
+                  url: event["url"],
+                  start_time: event["start"]["local"].strftime("%I:%M:%S %p"),
+                  end_time: event["end"]["local"].strftime("%I:%M:%S %p"),
+                  price: price(id.to_i),
+                  }
 
     def price(event_id)
       # finds the first (cheapest) ticket class that is available for purchase
