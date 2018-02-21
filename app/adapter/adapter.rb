@@ -14,17 +14,18 @@ module Adapter
  +  end
 
     private
-    
+
     def parse_event_details(event)
       id = event["id"]
       details = { name: event["name"],
                   url: event["url"],
                   start_time: event["start"]["local"].strftime("%I:%M:%S %p"),
                   end_time: event["end"]["local"].strftime("%I:%M:%S %p"),
-                  price: price(id.to_i),
+                  price: ticket_price(id.to_i),
                   }
+    end 
 
-    def price(event_id)
+    def ticket_price(event_id)
       # finds the first (cheapest) ticket class that is available for purchase
       ticket_info = HTTParty.get("#{event_id}/ticket_classes")["ticket_classes"].find { |ticket_class| ticket_class["on_sale_status"] == "AVAILABLE" }
       price = 0
