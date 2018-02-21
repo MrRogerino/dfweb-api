@@ -11,7 +11,8 @@ module Adapter
       itinerary = []
       i = 0
       while i < days_difference
-        {"day{#{i+1}}": one_day(keyword, location, start_date, events_per_day)}
+        day = {"day{#{i+1}}": one_day(keyword, location, start_date, events_per_day)}
+        itinerary << day
         i += 1
       end
       itinerary
