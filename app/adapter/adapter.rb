@@ -1,17 +1,18 @@
 module Adapter
   class EventBriteAdapter
- +  include HTTParty
- +
- +  EB_TOKEN = ENV['EB_TOKEN']
- +  base_uri "eventbriteapi.com/v3/events/"
- +
- +  def event_search(keyword, location, start_date = DateTime.now.midnight)
- +    @events = HTTParty.get('search', query: { token: "#{EB_TOKEN}",
-                            q: keyword,
- +                          "location.address".to_sym => location,
- +                          "start_date.range_start".to_sym => start_date.to_s[0..-7],
- +                          "start_date.range_end".to_sym => (start_date + 1.day).to_s[0..-7] })["events"]
- +  end
+    include HTTParty
+
+    EB_TOKEN = ENV['EB_TOKEN']
+    base_uri "https://eventbriteapi.com/v3/events/"
+    headers Authorization: "Bearer #{EB_TOKEN}"
+
+    def event_search(keyword, location, start_date = DateTime.now.midnight)
+      @events = HTTParty.get('search', query: {
+                                       q: keyword,
+                                       "location.address".to_sym => location,
+                                       "start_date.range_start".to_sym => start_date.to_s[0..-7],
+                                       "start_date.range_end".to_sym => (start_date + 1.day).to_s[0..-7] })["events"]
+    end
 
     private
 
@@ -38,4 +39,5 @@ module Adapter
       end
       return price
     end
+  end
 end

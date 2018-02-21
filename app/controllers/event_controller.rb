@@ -1,5 +1,16 @@
 class EventController < ApplicationController
   def welcome
-    render json: {instructions: "Welcome to the DFW API. Please reference the documentation found here: PLACEHOLDER, to help you make a decision on what fun events are in your area!"}.as_json
+    render json: {instructions: "Welcome to the Down For Whatever (DFW) API. Please reference the documentation found here: PLACEHOLDER, to help you make a decision on what fun events are going on in your area!"}
   end
+
+  def whatever
+    location = params[:location]
+    keyword = params[:q]
+    p location, keyword
+  end
+
+  def eventbrite_adapter
+    Adapter::EventBriteAdapter.new
+  end
+
 end
