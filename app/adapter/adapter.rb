@@ -23,7 +23,7 @@ module Adapter
                   end_time: event["end"]["local"].strftime("%I:%M:%S %p"),
                   price: ticket_price(id.to_i),
                   }
-    end 
+    end
 
     def ticket_price(event_id)
       # finds the first (cheapest) ticket class that is available for purchase
