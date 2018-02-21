@@ -46,3 +46,4 @@ Parameters:
 - Clean up EventBriteAdapter (use deserializers and refactor)
 - Create test suite
 - OAuth and better integration with EventBrite users
+- Add example responses to documentation 
