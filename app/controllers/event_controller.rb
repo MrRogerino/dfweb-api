@@ -1,6 +1,6 @@
 class EventController < ApplicationController
   def welcome
-    render json: {instructions: "Welcome to the Down For Whatever (DFW) API. Please reference the documentation found here: PLACEHOLDER, to help you make a decision on what fun events are going on in your area!"}
+    render json: {instructions: "Welcome to the Down For Whatever (DFW) API. Please reference the documentation found here: https://github.com/MrRogerino/dfweb-api/blob/master/README.md, to help you make a decision on what fun events are going on in your area!", readme: "https://github.com/MrRogerino/dfweb-api/blob/master/README.md"}
   end
 
   def whatever

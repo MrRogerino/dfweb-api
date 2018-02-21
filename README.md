@@ -44,3 +44,5 @@ Parameters:
 - Implement cost feature for trips, to better balance budget
 - Create persistent models in ActiveRecord for users to record preferred events
 - Clean up EventBriteAdapter (use deserializers and refactor)
+- Create test suite
+- OAuth and better integration with EventBrite users
