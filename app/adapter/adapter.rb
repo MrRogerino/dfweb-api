@@ -6,6 +6,25 @@ module Adapter
     base_uri "https://eventbriteapi.com/v3/events/"
     headers Authorization: "Bearer #{EB_TOKEN}"
 
+    def generate_itinenary(keyword, location, start_date, end_date, events_per_day = 2)
+      days = days_difference(start_date, end_date)
+      itinerary = []
+      i = 0
+      while i < days_difference
+        itinerary << one_day(keyword, location, start_date, events_per_day)
+      end
+    end
+
+    def one_day(keyword, location, start_date, events_per_day)
+      day = []
+      start_time = start_date.midnight
+      while day.length < events_per_day
+        event = random_event(keyword, location, start_time)
+        day << random_event
+        start_time = event.start_time.to_datetime + 1.hour
+      end
+    end
+
     def random_event(keyword, location, start_date = DateTime.now.midnight)
       event = HTTParty.get('search', query: {
                                        q: keyword,
@@ -41,8 +60,9 @@ module Adapter
       return price
     end
 
-    def
-
+    def days_difference(start_date, end_date)
+      return (end_date - start_date).to_i
+    end
 
 
   end
