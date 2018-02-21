@@ -14,6 +14,7 @@ class EventController < ApplicationController
     keyword = params[:q]
     start_date = params[:start_date]
     end_date = params[:end_date]
+    events_per_day = params[:events_per_day]
     render json: { itinerary: eventbrite_adapter.itinerary(keyword, location, start_date, end_date) }
   end
 
