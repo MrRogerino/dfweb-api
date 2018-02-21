@@ -11,8 +11,10 @@ module Adapter
       itinerary = []
       i = 0
       while i < days_difference
-        itinerary << one_day(keyword, location, start_date, events_per_day)
+        {"day{#{i+1}}": one_day(keyword, location, start_date, events_per_day)}
+        i += 1
       end
+      itinerary
     end
 
     def one_day(keyword, location, start_date, events_per_day)
@@ -23,6 +25,7 @@ module Adapter
         day << random_event
         start_time = event.start_time.to_datetime + 1.hour
       end
+      day
     end
 
     def random_event(keyword, location, start_date = DateTime.now.midnight)
