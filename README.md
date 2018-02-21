@@ -25,7 +25,7 @@ Parameters:
 
 ### Itinerary
 
-Traveling to foreign places for a few day? Plan an itinerary of activities before you go!
+Traveling to foreign places for a few days? Quickly plan a list of activities before you go!
 ```
 GET dfw-eb.herokuapp.com/itinerary
 ```
