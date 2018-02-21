@@ -36,7 +36,7 @@ Parameters:
 |  keyword      | string  |    no      |  Returns events matching the given keyword   |
 |  location     | string  |    yes     |  Returns events near a matching address      |
 |  start_date   | datetime|    no      |  The first day of your itinerary |
-| end_date |     | datetime | yes | The last day of your itinerary |
+| end_date |  datetime | yes | The last day of your itinerary |
 | daily_limit | integer | no | The maximum amount of events per day of your itinerary (default: 2) |
 
 ### TODO:
