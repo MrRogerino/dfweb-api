@@ -1,24 +1,48 @@
-# README
+# Down For Whatever API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The Down For Whatever API is designed to help eliminate indecisiveness, while still giving users freedom to explore their interests.
 
-Things you may want to cover:
+## Documentation
 
-* Ruby version
+* [Event of the Day](#Whatever)
+* [Itinerary](#Itinerary)
 
-* System dependencies
+### Whatever
 
-* Configuration
+Not sure what to do for tonight? Just say you're down for whatever.
+```
+GET dfw-eb.herokuapp.com/whatever
+```
 
-* Database creation
+Parameters:
 
-* Database initialization
+|  Attributes   |  Type   |  Required  |  Description                                 |
+|---------------|---------|------------|----------------------------------------------|
+|  keyword      | string  |    no      |  Returns events matching the given keyword   |
+|  location     | string  |    yes     |  Returns events near a matching address      |
+|  start_time   | datetime|    no      |  Look for events that start past a certain time (defaults to current time) |
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+### Itinerary
 
-* Deployment instructions
+Traveling to foreign places for a few day? Plan an itinerary of activities before you go!
+```
+GET dfw-eb.herokuapp.com/itinerary
+```
+Parameters:
 
-* ...
+|  Attributes   |  Type   |  Required  |  Description                                 |
+|---------------|---------|------------|----------------------------------------------|
+|  keyword      | string  |    no      |  Returns events matching the given keyword   |
+|  location     | string  |    yes     |  Returns events near a matching address      |
+|  start_date   | datetime|    no      |  The first day of your itinerary |
+| end_date |     | datetime | yes | The last day of your itinerary |
+| daily_limit | integer | no | The maximum amount of events per day of your itinerary (default: 2) |
+
+### TODO:
+
+- Implement cost feature for trips, to better balance budget
+- Create persistent models in ActiveRecord for users to record preferred events
+- Clean up EventBriteAdapter (use deserializers and refactor)
+- Create test suite
+- OAuth and better integration with EventBrite users
