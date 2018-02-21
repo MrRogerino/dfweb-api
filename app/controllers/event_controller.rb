@@ -6,7 +6,7 @@ class EventController < ApplicationController
   def whatever
     location = params[:location]
     keyword = params[:q]
-    p location, keyword
+    render json: {random_event: }
   end
 
   def eventbrite_adapter
