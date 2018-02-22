@@ -14,6 +14,7 @@ module Adapter
         day = {"day{#{i+1}}": one_day(keyword, location, start_date, events_per_day)}
         itinerary << day
         i += 1
+        start_date += 1.day
       end
       itinerary
     end
