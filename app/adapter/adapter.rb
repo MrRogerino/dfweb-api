@@ -35,7 +35,7 @@ module Adapter
                                        q: keyword,
                                        "location.address".to_sym => location,
                                        "start_date.range_start".to_sym => start_date.to_s[0..-7],
-                                       "start_date.range_end".to_sym => (start_date + 1.day.midnight).to_s[0..-7] })["events"].sample
+                                       "start_date.range_end".to_sym => ((start_date + 1.day).midnight).to_s[0..-7] })["events"].sample
       return parse_event_details(event)
     end
 
