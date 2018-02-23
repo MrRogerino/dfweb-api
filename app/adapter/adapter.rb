@@ -11,7 +11,8 @@ module Adapter
       itinerary = []
       current_day = 0
       while current_day < days
-        day = {"day#{current_day+1}": one_day(keyword, location, start_date, daily_events)}
+        day = {"date": start_date.strftime("%Y-%m-%d"),
+               "events": one_day(keyword, location, start_date, daily_events)}
         itinerary << day
         current_day +=1
         start_date += 1.day
@@ -61,13 +62,14 @@ module Adapter
         return "Donation"
       end
       cheapest_ticket = ticket_info.find { |ticket_class| ticket_class["on_sale_status"] == "AVAILABLE" }
-      price = 0
-      if cheapest_ticket["free"] # if there exists a "free" key within ticket info response
+      if !cheapest_ticket # edge case where event is searcheable, but all tickets are unavailable
+        return "Tickets unavailable"
+      elsif cheapest_ticket["free"] # if there exists a "free" key within ticket info response
         return price
       else
         cost = cheapest_ticket["cost"]["major_value"].to_f
         fee = cheapest_ticket["fee"]["major_value"].to_f
-        price = cost + fee
+        return cost + fee
       end
       price
     end
