@@ -21,12 +21,12 @@ module Adapter
 
     def one_day(keyword, location, start_date, daily_events = 2)
       day = []
-      time = start_date.midnight + 8.hour # initial value is events starting at 8 AM
+      current_time = start_date.midnight + 8.hour # initial value is events starting at 8 AM
       increment = 16.0 / daily_events # time window of search shrinks with more daily events
-      while day.length < events_per_day
-        random_event = random_event(keyword, location, time, time + increment.hours)
+      while day.length < events_per_day || next_day?(start_date, current_time)
+        random_event = random_event(keyword, location, current_time, current_time + increment.hours)
         day << random_event
-        time = event[:end_time].to_datetime + 1.hour # give minimum one hour between events 
+        time = event[:end_time].to_datetime + 1.hour # give minimum one hour between events
       end
       day
     end
@@ -68,6 +68,10 @@ module Adapter
         price = cost + fee
       end
       return price
+    end
+
+    def next_day?(start_date, current_date)
+      return current_date.day > start_date.day || current_date.month > start_date.month || current_date.year > start_date.year
     end
 
     def days_difference(start_date, end_date)
