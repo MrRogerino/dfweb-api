@@ -10,8 +10,8 @@ module Adapter
       days = days_difference(start_date, end_date)
       itinerary = []
       current_day = 0
-      while current_day < days_difference
-        day = {"day#{current_day}": one_day(keyword, location, start_date, daily_events)}
+      while current_day < days
+        day = {"day#{current_day+1}": one_day(keyword, location, start_date, daily_events)}
         itinerary << day
         current_day +=1
         start_date += 1.day
@@ -24,10 +24,10 @@ module Adapter
       # TODO: implement optional value to change start time
       current_time = start_date.midnight + 8.hour # initial value is events starting at 8 AM
       increment = 16.0 / daily_events # time window of search shrinks with more daily events
-      while day.length < events_per_day && !next_day?(start_date, current_time)
+      while day.length < daily_events && !next_day?(start_date, current_time)
         random_event = random_event(keyword, location, current_time, current_time + increment.hours)
         day << random_event
-        time = event[:end_time].to_datetime + 1.hour # give minimum one hour between events
+        current_time = event[:end_time].to_datetime + 1.hour # give minimum one hour between events
       end
       day
     end
@@ -42,10 +42,6 @@ module Adapter
     end
 
     private
-
-    def next_midnight(date) # advances the date to the next closest midnight
-      (date+1.day).midnight
-    end
 
     def parse_event_details(event)
       id = event["id"]
@@ -68,11 +64,15 @@ module Adapter
         fee = ticket_info["fee"]["major_value"].to_f
         price = cost + fee
       end
-      return price
+      price
+    end
+
+    def next_midnight(date) # advances the date to the next closest midnight
+      (date+1.day).midnight
     end
 
     def next_day?(start_date, current_date)
-      return current_date.day > start_date.day || current_date.month > start_date.month || current_date.year > start_date.year
+      current_date.day > start_date.day || current_date.month > start_date.month || current_date.year > start_date.year
     end
 
     def days_difference(start_date, end_date)
