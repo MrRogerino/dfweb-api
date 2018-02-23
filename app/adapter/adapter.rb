@@ -33,7 +33,7 @@ module Adapter
     end
 
     def random_event(keyword, location, start_date = DateTime.now, end_date = next_midnight(start_date))
-      event = HTTParty.get('/search', query: {
+      event = self.class.get('/search', query: {
                                        q: keyword,
                                        "location.address".to_sym => location,
                                        "start_date.range_start".to_sym => start_date.to_s[0..-7],
@@ -55,7 +55,7 @@ module Adapter
 
     def ticket_price(event_id)
       # finds the first (cheapest) ticket class that is available for purchase
-      ticket_info = HTTParty.get("/#{event_id}/ticket_classes")["ticket_classes"].find { |ticket_class| ticket_class["on_sale_status"] == "AVAILABLE" }
+      ticket_info = self.class.get("/#{event_id}/ticket_classes")["ticket_classes"].find { |ticket_class| ticket_class["on_sale_status"] == "AVAILABLE" }
       price = 0
       if !ticket_info || ticket_info["free"] # if ticket info does not exist, or if there exists a "free" key within ticket info response
         return price
