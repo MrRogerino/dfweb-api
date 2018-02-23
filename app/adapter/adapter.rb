@@ -21,6 +21,7 @@ module Adapter
 
     def one_day(keyword, location, start_date, daily_events = 2)
       day = []
+      # TODO: implement optional value to change start time 
       current_time = start_date.midnight + 8.hour # initial value is events starting at 8 AM
       increment = 16.0 / daily_events # time window of search shrinks with more daily events
       while day.length < events_per_day && !next_day?(start_date, current_time)
