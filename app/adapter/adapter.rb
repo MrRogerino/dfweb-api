@@ -47,10 +47,10 @@ module Adapter
 
     def parse_event_details(event)
       id = event["id"]
-      details = { name: event["name"],
+      details = { name: event["name"]["text"],
                   url: event["url"],
-                  start_time: event["start"]["local"].strftime("%I:%M:%S %p"),
-                  end_time: event["end"]["local"].strftime("%I:%M:%S %p"),
+                  start_time: event["start"]["local"].strftime("%I:%M %p"),
+                  end_time: event["end"]["local"].strftime("%I:%M %p"),
                   price: ticket_price(id.to_i),
                   }
     end
