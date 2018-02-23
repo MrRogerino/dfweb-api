@@ -63,8 +63,8 @@ module Adapter
       if !ticket_info || ticket_info["free"] # if ticket info does not exist, or if there exists a "free" key within ticket info response
         return price
       else
-        cost = ticket_info["cost"]["major_value"]
-        fee = ticket_info["fee"]["major_value"]
+        cost = ticket_info["cost"]["major_value"].to_f
+        fee = ticket_info["fee"]["major_value"].to_f
         price = cost + fee
       end
       return price
@@ -77,7 +77,6 @@ module Adapter
     def days_difference(start_date, end_date)
       return (end_date - start_date).to_i
     end
-
 
   end
 end
