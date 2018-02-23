@@ -19,7 +19,7 @@ module Adapter
       itinerary
     end
 
-    def one_day(keyword, location, start_date, events_per_day)
+    def one_day(keyword, location, start_date, daily_events = 2)
       day = []
       start_time = start_date.midnight
       while day.length < events_per_day
@@ -30,7 +30,7 @@ module Adapter
       day
     end
 
-    def random_event(keyword, location, start_date = DateTime.now, end_date = next_day(start_date))
+    def random_event(keyword, location, start_date = DateTime.now, end_date = next_midnight(start_date))
       event = HTTParty.get('/search', query: {
                                        q: keyword,
                                        "location.address".to_sym => location,
@@ -41,7 +41,7 @@ module Adapter
 
     private
 
-    def next_day(date) # advances the date to the next closest midnight
+    def next_midnight(date) # advances the date to the next closest midnight
       (date+1.day).midnight
     end
 
@@ -57,7 +57,7 @@ module Adapter
 
     def ticket_price(event_id)
       # finds the first (cheapest) ticket class that is available for purchase
-      ticket_info = HTTParty.get("#{event_id}/ticket_classes")["ticket_classes"].find { |ticket_class| ticket_class["on_sale_status"] == "AVAILABLE" }
+      ticket_info = HTTParty.get("/#{event_id}/ticket_classes")["ticket_classes"].find { |ticket_class| ticket_class["on_sale_status"] == "AVAILABLE" }
       price = 0
       if !ticket_info || ticket_info["free"] # if ticket info does not exist, or if there exists a "free" key within ticket info response
         return price
