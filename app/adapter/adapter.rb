@@ -30,16 +30,20 @@ module Adapter
       day
     end
 
-    def random_event(keyword, location, start_date = DateTime.now)
-      event = HTTParty.get('search', query: {
+    def random_event(keyword, location, start_date = DateTime.now, end_date = next_day(start_date))
+      event = HTTParty.get('/search', query: {
                                        q: keyword,
                                        "location.address".to_sym => location,
                                        "start_date.range_start".to_sym => start_date.to_s[0..-7],
-                                       "start_date.range_end".to_sym => (start_date + 1.day.midnight).to_s[0..-7] })["events"].sample
-      return parse_event_details(event)
+                                       "start_date.range_end".to_sym => end_date.to_s[0..-7] })["events"].sample
+      parse_event_details(event)
     end
 
     private
+
+    def next_day(date) # advances the date to the next closest midnight
+      (date+1.day).midnight
+    end
 
     def parse_event_details(event)
       id = event["id"]
