@@ -6,14 +6,14 @@ module Adapter
     base_uri "https://eventbriteapi.com/v3/events/"
     headers Authorization: "Bearer #{EB_TOKEN}"
 
-    def generate_itinenary(keyword, location, start_date, end_date, events_per_day = 2)
+    def generate_itinenary(keyword, location, start_date, end_date, daily_events = 2)
       days = days_difference(start_date, end_date)
       itinerary = []
-      i = 0
-      while i < days_difference
-        day = {"day{#{i+1}}": one_day(keyword, location, start_date, events_per_day)}
+      current_day = 0
+      while current_day < days_difference
+        day = {"day#{current_day}": one_day(keyword, location, start_date, daily_events)}
         itinerary << day
-        i += 1
+        current_day +=1
         start_date += 1.day
       end
       itinerary
@@ -21,7 +21,7 @@ module Adapter
 
     def one_day(keyword, location, start_date, daily_events = 2)
       day = []
-      # TODO: implement optional value to change start time 
+      # TODO: implement optional value to change start time
       current_time = start_date.midnight + 8.hour # initial value is events starting at 8 AM
       increment = 16.0 / daily_events # time window of search shrinks with more daily events
       while day.length < events_per_day && !next_day?(start_date, current_time)
@@ -76,7 +76,7 @@ module Adapter
     end
 
     def days_difference(start_date, end_date)
-      return (end_date - start_date).to_i
+      (end_date - start_date).to_i + 1
     end
 
   end
