@@ -59,11 +59,11 @@ module Adapter
       # finds the first (cheapest) ticket class that is available for purchase
       ticket_info = HTTParty.get("#{event_id}/ticket_classes")["ticket_classes"].find { |ticket_class| ticket_class["on_sale_status"] == "AVAILABLE" }
       price = 0
-      if !ticket_info || ticket_info["free"] # if ticket info does not exist, or if there exists a "free" key within ticket info response 
+      if !ticket_info || ticket_info["free"] # if ticket info does not exist, or if there exists a "free" key within ticket info response
         return price
       else
-        cost = ticket_info["cost"]["display"]
-        fee = ticket_info["fee"]["display"]
+        cost = ticket_info["cost"]["major_value"]
+        fee = ticket_info["fee"]["major_value"]
         price = cost + fee
       end
       return price
