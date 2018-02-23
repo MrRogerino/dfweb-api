@@ -21,11 +21,12 @@ module Adapter
 
     def one_day(keyword, location, start_date, daily_events = 2)
       day = []
-      start_time = start_date.midnight
+      time = start_date.midnight + 8.hour # initial value is events starting at 8 AM
+      increment = 16.0 / daily_events # time window of search shrinks with more daily events
       while day.length < events_per_day
-        event = random_event(keyword, location, start_time)
+        random_event = random_event(keyword, location, time, time + increment.hours)
         day << random_event
-        start_time = event.start_time.to_datetime + 1.hour
+        time = event[:end_time].to_datetime + 1.hour # give minimum one hour between events 
       end
       day
     end
