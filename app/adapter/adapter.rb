@@ -23,7 +23,7 @@ module Adapter
       day = []
       current_time = start_date.midnight + 8.hour # initial value is events starting at 8 AM
       increment = 16.0 / daily_events # time window of search shrinks with more daily events
-      while day.length < events_per_day || next_day?(start_date, current_time)
+      while day.length < events_per_day && !next_day?(start_date, current_time)
         random_event = random_event(keyword, location, current_time, current_time + increment.hours)
         day << random_event
         time = event[:end_time].to_datetime + 1.hour # give minimum one hour between events
@@ -50,8 +50,8 @@ module Adapter
       id = event["id"]
       details = { name: event["name"]["text"],
                   url: event["url"],
-                  start_time: event["start"]["local"].strftime("%I:%M %p"),
-                  end_time: event["end"]["local"].strftime("%I:%M %p"),
+                  start_time: event["start"]["local"].to_datetime,
+                  end_time: event["end"]["local"].to_datetime,
                   price: ticket_price(id.to_i),
                   }
     end
