@@ -6,6 +6,7 @@ The Down For Whatever API is designed to help eliminate indecisiveness, while st
 
 * [Event of the Day](#Whatever)
 * [Itinerary](#Itinerary)
+* [Tasklist](#TODO)
 
 ### Whatever
 
