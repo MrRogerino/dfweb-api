@@ -4,9 +4,9 @@ The Down For Whatever API is designed to help eliminate indecisiveness, while st
 
 ## Documentation
 
-* [Event of the Day](#Whatever)
-* [Itinerary](#Itinerary)
-* [Tasklist](#TODO)
+* [Event of the Day](#whatever)
+* [Itinerary](#itinerary)
+* [Tasklist](#todo)
 
 ### Whatever
 
