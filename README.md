@@ -39,7 +39,7 @@ Parameters:
 ```
 ### Itinerary
 
-Traveling to foreign places for a few days? Quickly plan a list of activities before you go! Returns a collection of each day of your itinerary. 
+Traveling to foreign places for a few days? Quickly plan a list of activities before you go! Returns a collection of events for each day of your itinerary. Each day's events are sorted in chronological order by start time, with a minimum one hour interval between each event to account for travel time.
 ```
 GET dfweb-api.herokuapp.com/itinerary
 ```
